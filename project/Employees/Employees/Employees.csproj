@@ -153,9 +153,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\IEntity.cs" />
+    <Compile Include="Models\Autorisation\Login.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\RegisterUser.cs" />
+    <Compile Include="Models\Autorisation\RegisterUser.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -174,6 +175,7 @@
     <Content Include="Views\Home\CreateEmployee.cshtml" />
     <Content Include="Views\Authorization\Index.cshtml" />
     <Content Include="Views\Authorization\RegistrationUser.cshtml" />
+    <Content Include="Views\Authorization\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -183,7 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Autorisation\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

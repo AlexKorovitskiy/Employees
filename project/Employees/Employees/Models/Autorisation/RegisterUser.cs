@@ -13,14 +13,4 @@ namespace Employees.Models
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
     }
-
-    public class LoginModel
-    {
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-    }
 }

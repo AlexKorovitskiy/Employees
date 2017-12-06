@@ -1,6 +1,7 @@
 ﻿using Employees.BL;
 using Employees.Dispatcher;
 using Employees.Models;
+using Employees.Models.Autorisation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace Employees.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public ActionResult Login(Login model)
         {
             if (ModelState.IsValid)
             {

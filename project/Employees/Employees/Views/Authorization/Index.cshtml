@@ -1,0 +1,33 @@
+﻿@model Employees.Models.LoginModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+<h2>Авторизация</h2>
+@using (Html.BeginForm("Login", "Authorization", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <h2>@ViewBag.Message</h2>
+    }
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row form-group">
+        <label class="control-label">
+            Login <input class="form-control" type="text" name="Name">
+        </label>
+    </div>
+    <div class="row  form-group">
+        <label class="control-label">
+            Password<input class="form-control" type="password" name="Password">
+        </label>
+</div>
+    <div class="row  form-group">
+        <input class = "btn btn-success" type="submit" value="Отправить" onclick="LoginAction_Click" />
+    </div>
+}
+<div class="row">
+   @Html.ActionLink("Регистрация", "RegistrationUser", "Authorization")
+</div>

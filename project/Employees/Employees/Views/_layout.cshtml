@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/StyleSheet.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Проект</title>
+</head>
+<body>
+    <div class="container" id="Main">
+        <h1 class="row text-center" id="Header">Здесь могла быть ваша реклама</h1>
+        <div>
+            <div id="Render">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="panel-footer text-center" id="Footer">
+            @Html.ActionLink("На главную", "Index")
+        </div>
+    </div>
+</body>
+</html>

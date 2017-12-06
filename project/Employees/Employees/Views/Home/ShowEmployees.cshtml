@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Employees.Models.Employee>
+
+@{
+    ViewBag.Title = "Сотрудники";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        
+        @{
+            Employees.Models.Company company = Session["Company"] as Employees.Models.Company;
+            if (company != null)
+            {
+                <h2>Трудящиеся компании: "@company.Name"</h2>
+            }
+            else
+            {
+                <h2>Весь коллектив трудящихся</h2>
+            }
+        }
+
+        <p>
+            @Html.ActionLink("Добавить работника", "CreateEmployee")
+        </p>
+        </row>
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Отчество</th>
+                    <th>Дата приема на работу</th>
+                    <th>Подразделение</th>
+                    <th>Компания</th>
+                    <th>Действие</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SecondName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MidleName)
+                        </td>
+                        <td>
+                            @if (item.Date != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Date.Value/*Date*/)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Company.Name)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Редактировать", "EditEmployee", new { idEmployee = item.Id }) |
+                            @Html.ActionLink("Удалить", "DeleteEmployee", new { idEmployee = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

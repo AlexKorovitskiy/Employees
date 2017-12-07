@@ -1,5 +1,6 @@
 ﻿using Employees.Dispatcher;
 using Employees.Models.API;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

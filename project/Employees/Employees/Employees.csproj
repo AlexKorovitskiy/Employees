@@ -169,13 +169,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\IEntity.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Identyity\ApplicationUser.cs" />
     <Compile Include="Models\Autorisation\Login.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Autorisation\RegisterUser.cs" />
+    <Compile Include="Models\Identyity\CustomPasswordHasher.cs" />
+    <Compile Include="Models\Identyity\CustomUserManager.cs" />
     <Compile Include="Models\Identyity\CustomUserStore.cs" />
-    <Compile Include="Models\Identyity\User.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

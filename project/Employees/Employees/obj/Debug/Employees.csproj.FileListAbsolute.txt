@@ -60,3 +60,6 @@ D:\Alex\Employees\project\Employees\Employees\bin\ru\System.Web.Mvc.resources.dl
 D:\Alex\Employees\project\Employees\Employees\obj\Debug\Employees.csprojResolveAssemblyReference.cache
 D:\Alex\Employees\project\Employees\Employees\obj\Debug\Employees.dll
 D:\Alex\Employees\project\Employees\Employees\obj\Debug\Employees.pdb
+d:\2\Employees\project\Employees\Employees\obj\Debug\Employees.csprojResolveAssemblyReference.cache
+d:\2\Employees\project\Employees\Employees\obj\Debug\Employees.dll
+d:\2\Employees\project\Employees\Employees\obj\Debug\Employees.pdb

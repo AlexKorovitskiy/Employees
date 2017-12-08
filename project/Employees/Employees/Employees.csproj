@@ -157,6 +157,7 @@
     <Compile Include="BL\ManagerExecute.cs" />
     <Compile Include="BL\UserManager.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Dispatcher\ContextResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Dispatcher\API\IContext.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\Identyity\CustomPasswordHasher.cs" />
     <Compile Include="Models\Identyity\CustomUserManager.cs" />
     <Compile Include="Models\Identyity\CustomUserStore.cs" />
+    <Compile Include="Models\Identyity\Startup.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -205,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

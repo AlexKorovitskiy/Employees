@@ -5,28 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using Employees.Models;
 using Employees.BL;
+using API;
+using BL;
 
 namespace Employees.Controllers
 {
     public class HomeController : Controller
     {
-        public static List<Company> listCompany = new List<Company>();
-        public static List<Employee> listEmployee = new List<Employee>();
-
         public HomeController()
         {
-            if (listCompany.Count == 0)
-            {
-                listCompany.Add(new Company { Id = 1, Name = "ХУЙ", OrganizationForm = "EF", SizeCompany = 3 });
-                listCompany.Add(new Company { Id = 2, Name = "ХУЙ1", OrganizationForm = "FDHSD", SizeCompany = 6 });
-                listCompany.Add(new Company { Id = 3, Name = "ХУЙ2", OrganizationForm = "FHFGH", SizeCompany = 12 });
-            }
-            if (listEmployee.Count == 0)
-            {
-                listEmployee.Add(new Employee { Id = 1, FirstName = "перс1", CompanyId = 1, SecondName="loh1" });
-                listEmployee.Add(new Employee { Id = 2, FirstName = "перс2", CompanyId = 1, SecondName = "loh2" });
-                listEmployee.Add(new Employee { Id = 3, FirstName = "перс3", CompanyId = 1, SecondName = "loh3" });
-            }
 
         }
         // GET: Home
@@ -89,7 +76,13 @@ namespace Employees.Controllers
                 Session["Company"] = company;
                 if (company != null)
                 {
-                    List<Employee> collection = EmployeesManager.GetManager().GetEntitysForCompany(company);
+                    //List<Employee> collection = EmployeesManager.GetManager().GetEntitysForCompany(company);
+                    EmployeesFilter filter = new EmployeesFilter();
+                    Result<Employee> result = EmployeesManager.GetManager().LoadEntityList(filter);
+                    if (!result.Success)
+                        return HttpNotFound();
+
+                    List<Employee> collection = result.Entitys;
                     return View(collection);
                 }
                 else

@@ -1,4 +1,5 @@
-﻿using API;
+﻿
+using API;
 using Model.API;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,16 @@ namespace Model
     public abstract class Entity : IEntity
     {
         public int? Id { get; set; } = null;
+        public Entity(int? id)
+        {
+            Id = id;
+        }
         public abstract string SaveProcedureName { get; }
         public abstract string DeleteProcedureName { get; }
 
-        protected abstract void PreparerSave(ICommandContext context);
-        protected abstract void PreparerDelete(ICommandContext context);
+        public abstract ICommandContext PreparerSave(Dictionary<string, object> param);
+        public abstract ICommandContext PreparerDelete();
+
+        protected abstract Entity Clone();
     }
 }

@@ -1,0 +1,11 @@
+D:\Alex\Employees\project\Employees\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+D:\Alex\Employees\project\Employees\BL\bin\Debug\BL.dll
+D:\Alex\Employees\project\Employees\BL\bin\Debug\BL.pdb
+D:\Alex\Employees\project\Employees\BL\bin\Debug\API.dll
+D:\Alex\Employees\project\Employees\BL\bin\Debug\Model.dll
+D:\Alex\Employees\project\Employees\BL\bin\Debug\Server.dll
+D:\Alex\Employees\project\Employees\BL\bin\Debug\API.pdb
+D:\Alex\Employees\project\Employees\BL\bin\Debug\Model.pdb
+D:\Alex\Employees\project\Employees\BL\bin\Debug\Server.pdb
+D:\Alex\Employees\project\Employees\BL\obj\Debug\BL.dll
+D:\Alex\Employees\project\Employees\BL\obj\Debug\BL.pdb

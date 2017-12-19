@@ -1,0 +1,7 @@
+D:\Alex\Employees\project\Employees\Model\bin\Debug\Model.dll
+D:\Alex\Employees\project\Employees\Model\bin\Debug\Model.pdb
+D:\Alex\Employees\project\Employees\Model\bin\Debug\API.dll
+D:\Alex\Employees\project\Employees\Model\bin\Debug\API.pdb
+D:\Alex\Employees\project\Employees\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+D:\Alex\Employees\project\Employees\Model\obj\Debug\Model.dll
+D:\Alex\Employees\project\Employees\Model\obj\Debug\Model.pdb

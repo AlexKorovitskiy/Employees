@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractFilter.cs" />
     <Compile Include="API\IEntity.cs" />
+    <Compile Include="BaseCollection.cs" />
+    <Compile Include="DomainModel.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="EntityBaseCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

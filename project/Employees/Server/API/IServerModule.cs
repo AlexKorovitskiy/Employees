@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Server.API
 {
-    interface IServerModule
+    public interface IServerModule
     {
         /// <summary>
         /// Выполнение запроса

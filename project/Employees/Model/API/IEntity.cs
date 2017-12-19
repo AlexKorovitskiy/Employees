@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace Model.API
         
         string SaveProcedureName { get; }
         string DeleteProcedureName { get; }
+
+        ICommandContext PreparerSave(Dictionary<string, object> param);
+        ICommandContext PreparerDelete();
 
         ///// <summary>
         ///// Создаем контекст для сохранения сущности

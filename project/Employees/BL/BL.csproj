@@ -41,7 +41,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractManagerExecute.cs" />
+    <Compile Include="CommandContext.cs" />
+    <Compile Include="ContextBase.cs" />
+    <Compile Include="ContextSingleEntity.cs" />
+    <Compile Include="ContextUpdate.cs" />
+    <Compile Include="ManagerExecute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\API\API.csproj">
+      <Project>{7B47928E-EB50-476B-9E94-E24563DE3B51}</Project>
+      <Name>API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{098A335E-08D2-4DEC-A7FA-8AC3D146FF97}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.csproj">
+      <Project>{6879EBFB-3822-49FD-9EC7-5603F8AD5153}</Project>
+      <Name>Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

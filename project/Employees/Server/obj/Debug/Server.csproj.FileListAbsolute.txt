@@ -5,3 +5,10 @@ D:\2\Employees\project\Employees\Server\bin\Debug\API.dll
 D:\2\Employees\project\Employees\Server\bin\Debug\API.pdb
 D:\2\Employees\project\Employees\Server\obj\Debug\Server.dll
 D:\2\Employees\project\Employees\Server\obj\Debug\Server.pdb
+D:\Alex\Employees\project\Employees\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+D:\Alex\Employees\project\Employees\Server\obj\Debug\Server.dll
+D:\Alex\Employees\project\Employees\Server\obj\Debug\Server.pdb
+D:\Alex\Employees\project\Employees\Server\bin\Debug\Server.dll
+D:\Alex\Employees\project\Employees\Server\bin\Debug\Server.pdb
+D:\Alex\Employees\project\Employees\Server\bin\Debug\API.dll
+D:\Alex\Employees\project\Employees\Server\bin\Debug\API.pdb

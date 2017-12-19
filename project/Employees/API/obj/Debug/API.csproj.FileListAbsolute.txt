@@ -3,3 +3,7 @@ D:\2\Employees\project\Employees\API\bin\Debug\API.pdb
 D:\2\Employees\project\Employees\API\obj\Debug\API.dll
 D:\2\Employees\project\Employees\API\obj\Debug\API.pdb
 D:\2\Employees\project\Employees\API\obj\Debug\API.csprojResolveAssemblyReference.cache
+D:\Alex\Employees\project\Employees\API\bin\Debug\API.dll
+D:\Alex\Employees\project\Employees\API\bin\Debug\API.pdb
+D:\Alex\Employees\project\Employees\API\obj\Debug\API.dll
+D:\Alex\Employees\project\Employees\API\obj\Debug\API.pdb

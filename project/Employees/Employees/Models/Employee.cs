@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-
+using Model;
 
 namespace Employees.Models
 {
-    public class Employee : IEntity
+    public class Employee : Model.Entity
     {
         #region Fields
 
-        public int? Id { get; set; } = null;
+        //public int? Id { get; set; } = null;
 
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
@@ -39,6 +39,16 @@ namespace Employees.Models
         public Company Company { get; set; }
 
         #endregion
+        public Employee()
+            : base(null)
+        {
+
+        }
+        public Employee(int? Id)
+            :base(Id)
+        {
+
+        } 
 
         #region Method
 
@@ -150,7 +160,34 @@ namespace Employees.Models
             context.Params.Add("Id", Id);
             return context;
         }
+        protected override Entity Clone()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override string DeleteProcedureName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public override global::API.ICommandContext PreparerSave(Dictionary<string, object> param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string SaveProcedureName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public override global::API.ICommandContext PreparerDelete()
+        {
+            throw new NotImplementedException();
+        }
     }
     public enum Position
     {

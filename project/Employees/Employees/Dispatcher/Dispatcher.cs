@@ -54,7 +54,7 @@ namespace Employees.Dispatcher
                 }
                 catch (Exception ex)
                 {
-                    resultTrransaction = new Result(false, "Проблемы при получении данных из БД");
+                    resultTrransaction = new Result(false, "Проблемы при получении данных из БД: \n\t"+ ex.Message);
                     return null;
                 }
                 finally

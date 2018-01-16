@@ -160,7 +160,6 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Dispatcher\ContextResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Dispatcher\API\IContext.cs" />
     <Compile Include="Dispatcher\API\IExecuteContext.cs" />
     <Compile Include="Dispatcher\API\IResult.cs" />
     <Compile Include="Dispatcher\Context.cs" />
@@ -169,7 +168,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\API\IEntity.cs" />
+    <Compile Include="Models\API\ICompany.cs" />
+    <Compile Include="Models\API\IEmployee.cs" />
+    <Compile Include="Models\EmployeesFilter.cs" />
     <Compile Include="Models\Identyity\ApplicationUser.cs" />
     <Compile Include="Models\Autorisation\Login.cs" />
     <Compile Include="Models\Company.cs" />
@@ -219,7 +220,7 @@
       <Name>BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{098a335e-08d2-4dec-a7fa-8ac3d146ff97}</Project>
+      <Project>{098A335E-08D2-4DEC-A7FA-8AC3D146FF97}</Project>
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>

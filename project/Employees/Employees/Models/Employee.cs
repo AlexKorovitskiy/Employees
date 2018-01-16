@@ -1,20 +1,19 @@
 ﻿using Employees.BL;
 using Employees.Dispatcher;
-using Employees.Models.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Model;
+using API.Model;
 
 namespace Employees.Models
 {
-    public class Employee : Model.Entity
+    public class Employee : IEmployee
     {
         #region Fields
 
-        //public int? Id { get; set; } = null;
+        public int? Id { get; set; } = null;
 
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
@@ -36,19 +35,19 @@ namespace Employees.Models
         public int? CompanyId { get; set; }
 
         //[Display(Name = "Компания")]
-        public Company Company { get; set; }
+        public ICompany Company { get; set; }
 
         #endregion
-        public Employee()
-            : base(null)
-        {
+        //public Employee()
+        //    : base(null)
+        //{
 
-        }
-        public Employee(int? Id)
-            :base(Id)
-        {
+        //}
+        //public Employee(int? Id)
+        //    : base(Id)
+        //{
 
-        } 
+        //}
 
         #region Method
 
@@ -59,9 +58,9 @@ namespace Employees.Models
         /// </summary>
         /// <param name="idCompany"></param>
         /// <returns></returns>
-        public static Context PrepareLoad(int idEmployee)
+        public static IContext PrepareLoad(int idEmployee)
         {
-            Context context = new Context();
+            IContext context = new Context();
             context.ProcedureName = "LoadEmployee";
             context.Params.Add("Id", idEmployee);
             return context;
@@ -71,9 +70,9 @@ namespace Employees.Models
         /// Ззаполняем контекст для загрузки всех сущностей
         /// </summary>
         /// <returns></returns>
-        public static Context PrepareLoadList(Company company)
+        public static IContext PrepareLoadList(Company company)
         {
-            Context context = new Context();
+            IContext context = new Context();
             context.ProcedureName = "LoadEmployees";
             if (company != null && company.Id != null)
                 context.Params.Add("IdCompany", company.Id);
@@ -136,9 +135,9 @@ namespace Employees.Models
         /// Создаем контекст для сохранения сущности
         /// </summary>
         /// <returns></returns>
-        public Context PrepareSave()
+        public IContext PrepareSave()
         {
-            Context context = new Context();
+            IContext context = new Context();
             context.ProcedureName = "SaveEmployee";
             context.Params.Add("Id", Id);
             context.Params.Add("FirstName", FirstName);
@@ -153,47 +152,41 @@ namespace Employees.Models
         /// Создаем контекст для удаления сущности
         /// </summary>
         /// <returns></returns>
-        public Context PrepareDelete()
+        public IContext PrepareDelete()
         {
-            Context context = new Context();
+            IContext context = new Context();
             context.ProcedureName = "DeleteEmployee";
             context.Params.Add("Id", Id);
             return context;
         }
-        protected override Entity Clone()
-        {
-            throw new NotImplementedException();
-        }
+        //protected override Entity Clone()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override string DeleteProcedureName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public override global::API.ICommandContext PreparerSave(Dictionary<string, object> param)
-        {
-            throw new NotImplementedException();
-        }
+        //public override string DeleteProcedureName
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+        //public override global::API.ICommandContext PreparerSave(Dictionary<string, object> param)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override string SaveProcedureName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public override global::API.ICommandContext PreparerDelete()
-        {
-            throw new NotImplementedException();
-        }
+        //public override string SaveProcedureName
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+        //public override global::API.ICommandContext PreparerDelete()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
-    public enum Position
-    {
-        Разработчик = 0,
-        Тестировщик = 1,
-        Бизнес_аналитик = 2,
-        Менеджер = 3
-    }
+
 }

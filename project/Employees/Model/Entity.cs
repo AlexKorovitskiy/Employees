@@ -12,16 +12,31 @@ namespace Model
     public abstract class Entity : IEntity
     {
         public int? Id { get; set; } = null;
+
+        public Entity()
+        {
+
+        }
+
         public Entity(int? id)
         {
             Id = id;
         }
-        public abstract string SaveProcedureName { get; }
-        public abstract string DeleteProcedureName { get; }
+        public virtual string SaveProcedureName { get; }
+        public virtual string DeleteProcedureName { get; }
 
-        public abstract ICommandContext PreparerSave(Dictionary<string, object> param);
-        public abstract ICommandContext PreparerDelete();
+        public virtual ICommandContext PreparerSave(Dictionary<string, object> param)
+        {
+            throw new Exception("Не переопределен метод PreparerSave");
+        }
+        public virtual ICommandContext PreparerDelete()
+        {
+            throw new Exception("Не переопределен метод PreparerDelete");
+        }
 
-        protected abstract Entity Clone();
+        protected virtual Entity Clone()
+        {
+            return null;// new Entity(Id);
+        }
     }
 }

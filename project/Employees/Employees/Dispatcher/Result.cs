@@ -1,5 +1,5 @@
 ﻿using Employees.Dispatcher.API;
-using Employees.Models.API;
+using Model.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;

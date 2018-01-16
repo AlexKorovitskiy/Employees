@@ -1,4 +1,5 @@
-﻿using Employees.Dispatcher.API;
+﻿using API.Model;
+using Employees.Dispatcher.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;

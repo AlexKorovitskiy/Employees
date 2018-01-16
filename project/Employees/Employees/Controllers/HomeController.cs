@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Employees.Models;
 using Employees.BL;
 using API;
 using BL;
+using API.Model;
 
 namespace Employees.Controllers
 {
@@ -21,99 +21,87 @@ namespace Employees.Controllers
         //{
         //    return View("~/Views/Authorization/Index.cshtml");
         //}
-
         [AllowAnonymous]
         public ActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View("~/Views/Authorization/Index.cshtml");
         }
-
         #region Company
 
         [HttpPost]
-        public ActionResult EditCompany(Company company)
+        public ActionResult EditCompany(ICompany company)
         {
-            CompanyManager.GetManager().Update(company);
+            CompanyManager.GetManager().Save(company);
             return RedirectToAction("ShowCompanys");
         }
 
         [HttpGet]
         public ActionResult EditCompany(int? idCompany)
         {
-            if (idCompany != null)
-            {
-                Company company = CompanyManager.GetManager().GetEntityById((int)idCompany);
-                return View(company);
-            }
-            return View();
+            var result =CompanyManager.GetManager().LoadEntity((idCompany));
+            if (!result.Success)
+                return View();
+            
+            return View(result.ResultEntity);
         }
 
         public ActionResult ShowCompanys()
         {
-            var list = CompanyManager.GetManager().GetEntitys();
-            return View(list);
+            var result = CompanyManager.GetManager().LoadEntityList(null);
+            if (!result.Success)
+                return HttpNotFound();
+            return View(result.Entitys);
         }
 
         public ActionResult DeleteCompany(int idCompany)
         {
-            Company company = CompanyManager.GetManager().GetEntityById(idCompany);
-            if (company == null)
+            var result = CompanyManager.GetManager().Delete(idCompany);
+            if (!result.Success)
                 return HttpNotFound();
-            CompanyManager.GetManager().Delete(company);
             return RedirectToAction("ShowCompanys");
         }
 
         #endregion
-
         #region  Employees
 
         public ActionResult ShowEmployees(int? idCompany = null)
         {
+            EmployeesFilter filter = new EmployeesFilter();
             if (idCompany != null)
             {
-                Company company = CompanyManager.GetManager().GetEntityById((int)idCompany);
-                Session["Company"] = company;
-                if (company != null)
-                {
-                    //List<Employee> collection = EmployeesManager.GetManager().GetEntitysForCompany(company);
-                    EmployeesFilter filter = new EmployeesFilter();
-                    Result<Employee> result = EmployeesManager.GetManager().LoadEntityList(filter);
-                    if (!result.Success)
-                        return HttpNotFound();
-
-                    List<Employee> collection = result.Entitys;
-                    return View(collection);
-                }
-                else
-                {
+                var result = CompanyManager.GetManager().LoadEntity(idCompany);
+                if (!result.Success)
                     return HttpNotFound();
-                }
+                Session["Company"] = filter.Company = result.ResultEntity;
             }
-            else
-            {
-                Session["Company"] = null;
-                List<Employee> collection = EmployeesManager.GetManager().GetEntitys();
-                return View(collection);
-            }
+            Result<IEmployee> resultLoadList = EmployeesManager.GetManager().LoadEntityList(filter);
+            if (!resultLoadList.Success)
+                return HttpNotFound();
+            ;
+            return View(resultLoadList.Entitys);
         }
+
 
         [HttpGet]
         public ActionResult CreateEmployee()
         {
             //Эту штуку добавил для того, чтобы мы могли выкинуть список имеющихся компаний на вьюхе
-            ViewData["Companys"] = from company in CompanyManager.GetManager().GetEntitys()
+            var result = CompanyManager.GetManager().LoadEntityList(null);
+            if (!result.Success)
+                return HttpNotFound();
+            ViewData["Companys"] = from company in result.Entitys
                                    select new SelectListItem { Text = company.Name, Value = company.Id.ToString() };
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateEmployee(Employee employee)
+        public ActionResult CreateEmployee(IEmployee employee)
         {
-            EmployeesManager.GetManager().Update(employee);
+            EmployeesManager.GetManager().Save(employee);
             //сессии использую для того, чтобы запоминать какая въюха была до перехода на форму редактирования
             //(если мы перешли в редактирование пользователя из вьюхи со списком работников конкретной компании, то вернемся потом на эту же вьюху)
-            Company company = (Company)Session["Company"];
+            ICompany company = (ICompany)Session["Company"];
             return RedirectToAction("ShowEmployees", new { idCompany = (company != null) ? company.Id : null });
         }
 
@@ -121,14 +109,16 @@ namespace Employees.Controllers
         public ActionResult EditEmployee(int? idEmployee = null)
         {
             //Эту штуку добавил для того, чтобы мы могли заполнить список имеющихся компаний на вьюхе
-            ViewData["Companys"] = from company in CompanyManager.GetManager().GetEntitys()
+            var result = CompanyManager.GetManager().LoadEntityList(null);
+            if (!result.Success)
+                return HttpNotFound();
+            ViewData["Companys"] = from company in result.Entitys
                                    select new SelectListItem { Text = company.Name, Value = company.Id.ToString() };
-            if (idEmployee != null)
-            {
-                Employee employee = EmployeesManager.GetManager().GetEntityById((int)idEmployee);
-                return View(employee);
-            }
-            return View();
+            var resultLoadEntity = EmployeesManager.GetManager().LoadEntity((int)idEmployee);
+            if (!resultLoadEntity.Success)
+                return View();
+
+            return View(resultLoadEntity.ResultEntity);
         }
 
         /// <summary>
@@ -137,12 +127,12 @@ namespace Employees.Controllers
         /// <param name="employee"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditEmployee(Employee employee)
+        public ActionResult EditEmployee(IEmployee employee)
         {
-            EmployeesManager.GetManager().Update(employee);
+            EmployeesManager.GetManager().Save(employee);
             //сессии использую для того, чтобы запоминать какая въюха была до перехода на форму редактирования
             //(если мы перешли в редактирование пользователя из вьюхи со списком работников конкретной компании, то вернемся потом на эту же вьюху)
-            Company company = (Company)Session["Company"];
+            ICompany company = (ICompany)Session["Company"];
             return RedirectToAction("ShowEmployees", new { idCompany = (company != null) ? company.Id : null });
         }
 
@@ -153,13 +143,14 @@ namespace Employees.Controllers
         /// <returns></returns>
         public ActionResult DeleteEmployee(int idEmployee)
         {
-            Employee employee = EmployeesManager.GetManager().GetEntityById(idEmployee);
-            if (employee == null)
+            var result = EmployeesManager.GetManager().LoadEntity(idEmployee);
+            if(!result.Success)
                 return HttpNotFound();
-            EmployeesManager.GetManager().Delete(employee);
+
+            EmployeesManager.GetManager().Delete(result.ResultEntity);
             //сессии использую для того, чтобы запоминать какая въюха была до перехода на форму редактирования
             //(если мы перешли в редактирование пользователя из вьюхи со списком работников конкретной компании, то вернемся потом на эту же вьюху)
-            Company company = (Company)Session["Company"];
+            ICompany company = (ICompany)Session["Company"];
             return RedirectToAction("ShowEmployees", new { idCompany = (company != null) ? company.Id : null });
         }
 

@@ -1,11 +1,8 @@
-﻿using Employees.BL.API;
+﻿using API.Model;
 using Employees.Dispatcher;
 using Employees.Dispatcher.API;
-using Employees.Models.API;
-using System;
+using Model.API;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Employees.BL
 {
@@ -28,24 +25,24 @@ namespace Employees.BL
 
         public virtual void Update(T entity)
         {
-            Context context = entity.PrepareSave();
-            Result result;
-            List<ContextResult> resultCollection = ExecuterDBAction.ProcessCommand(context, out result);
-            if (result.Success)
-            {
+            //IContext context = entity.PrepareSave();
+            //Result result;
+            //List<ContextResult> resultCollection = ExecuterDBAction.ProcessCommand(context, out result);
+            //if (result.Success)
+            //{
 
-            }
+            //}
         }
 
         public virtual void Delete(T entity)
         {
-            Context context = entity.PrepareDelete();
-            Result result;
-            List<ContextResult> resultCollection = ExecuterDBAction.ProcessCommand(context, out result);
-            if (result.Success)
-            {
+            //IContext context = entity.PrepareDelete();
+            //Result result;
+            //List<ContextResult> resultCollection = ExecuterDBAction.ProcessCommand(context, out result);
+            //if (result.Success)
+            //{
 
-            }
+            //}
         }
     }
 }

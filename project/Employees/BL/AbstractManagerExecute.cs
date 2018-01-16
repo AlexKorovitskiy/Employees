@@ -11,21 +11,9 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public abstract class AbstractManagerExecute<T> where T : Entity, new()
+    public abstract class AbstractManagerExecute<T> where T : IEntity//, new()
     {
-        //protected delegate Result ExecutingDelegate(Context);
-        //protected virtual Result Execute(ExecutingDelegate action)
-        //{
-        //    try
-        //    {
-        //        return action();
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return new Result(false, ex.Message);
-        //    }
-        //}
+        protected abstract string LoadProcedureName{ get; }
         #region SaveAction
 
         protected virtual IServerModule RelatedServer { get; set; } = DispatcherSQL.GetDispatcher();
@@ -36,17 +24,17 @@ namespace BL
         /// <param name="entity"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        protected Result Save(T entity, Dictionary<string, object> param)
+        public Result<T> Save(T entity/*, Dictionary<string, object> param*/)
         {
             try
             {
-                Result returnResult = new Result();
+                Result<T> returnResult = new Result<T>();
 
                 if (entity == null)
-                    entity = new T();
+                    return new Result<T>(false, "Не задан объект для сохрания");//entity = new T();
 
                 {
-                    Result result = BeforeSaveAction(entity, param);
+                    Result<T> result = BeforeSaveAction(entity/*, param*/);
                     if (!result.Success)
                     {
                         returnResult.Success = false;
@@ -56,7 +44,7 @@ namespace BL
                 }
 
                 {
-                    var context = entity.PreparerSave(param);
+                    var context = PreparerSave(/*param*/);
                     ServerResult result = RelatedServer.ExcecuteComand(context);
                     if (!result.Success)
                     {
@@ -68,7 +56,7 @@ namespace BL
                 }
 
                 {
-                    Result result = AfterSaveAction(entity, param);
+                    Result<T> result = AfterSaveAction(entity/*, param*/);
                     if (!result.Success)
                     {
                         returnResult.Success = false;
@@ -80,38 +68,72 @@ namespace BL
             }
             catch (Exception ex)
             {
-                return new Result(false, ex.Message);
+                return new Result<T>(false, ex.Message);
             }
-
         }
+
+        protected abstract ICommandContext PreparerSave();
 
         /// <summary>
         /// Действия перед сохранением
         /// </summary>
         /// <returns></returns>
-        protected virtual Result BeforeSaveAction(T entity, Dictionary<string, object> param)
+        protected virtual Result<T> BeforeSaveAction(T entity/*, Dictionary<string, object> param*/)
         {
-            return new Result();
+            return new Result<T>();
         }
 
         /// <summary>
         /// Действия после сохранения
         /// </summary>
         /// <returns></returns>
-        protected virtual Result AfterSaveAction(T entity, Dictionary<string, object> param)
+        protected virtual Result<T> AfterSaveAction(T entity/*, Dictionary<string, object> param*/)
         {
-            return new Result();
+            return new Result<T>();
         }
         #endregion
 
+        #region LoadEntity
+
+        public Result<T> LoadEntity(int? id)
+        {
+            if (id == null || id < 0)
+                return new Result<T>(false, "Не задан Id");
+
+            ICommandContext context;
+            {
+                context = new CommandContext();
+                context.ProcedureName = LoadProcedureName;
+                context.Params.Add("Id", id);
+            }
+
+            ServerResult loadResult;
+            {
+                loadResult = RelatedServer.ExcecuteComand(context);
+                if (!loadResult.Success)
+                    return new Result<T>(false, loadResult.Message);
+                if (loadResult.ResultValuesList.Count != 1)
+                    return new Result<T>(false, "Объект не найден");
+            }
+            { 
+                T resultObject = ParseLoadEntity(loadResult.ResultValuesList[0]);
+                if (resultObject == null)
+                    return new Result<T>(false, "Объект не найден");
+
+                return new Result<T>() { ResultEntity = resultObject };
+            }
+        }
+
+        protected abstract T ParseLoadEntity(Dictionary<string, object> param);
+
+        #endregion
+
         #region LoadEntityList
-
-        private BaseCollection<T> RelatedCollection = new BaseCollection<T>();
-
-        public virtual Result<T> LoadEntityList(IFilter filter)
+        
+        public Result<T> LoadEntityList(IFilter filter)
         {
             Result<T> returnResult = new Result<T>();
-            ICommandContext context = RelatedCollection.PreparerLoad(filter);
+            ICommandContext context = PreparerLoadList(filter);
             ServerResult loadResult = RelatedServer.ExcecuteComand(context);
             if (!loadResult.Success)
             {
@@ -119,13 +141,19 @@ namespace BL
                 returnResult.Message = loadResult.Message;
                 return returnResult;
             }
+            foreach (Dictionary<string,object> item in loadResult.ResultValuesList)
+            {
+                T entity = ParseLoadEntity(item);
+                if (item != null)
+                    returnResult.Entitys.Add(entity);
+            }
             return returnResult;
         }
-
+        protected abstract ICommandContext PreparerLoadList(IFilter filter);
 
         #endregion
 
-        #region 
+        #region Delete 
 
         /// <summary>
         /// Удаление сущности
@@ -133,17 +161,16 @@ namespace BL
         /// <param name="entity"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        protected Result Delete(T entity)
+        public Result<T> Delete(T entity)
         {
             try
             {
-                Result returnResult = new Result();
+                Result<T> returnResult = new Result<T>();
 
                 if (entity == null)
-                    entity = new T();
-
+                    return new Result<T>(false, "Не задан объект для удаления!");
                 {
-                    Result result = BeforeDeleteAction(entity);
+                    Result<T> result = BeforeDeleteAction(entity);
                     if (!result.Success)
                     {
                         returnResult.Success = false;
@@ -153,7 +180,7 @@ namespace BL
                 }
 
                 {
-                    var context = entity.PreparerDelete();
+                    ICommandContext context = PreparerDelete(entity);
                     ServerResult result = RelatedServer.ExcecuteComand(context);
                     if (!result.Success)
                     {
@@ -165,7 +192,7 @@ namespace BL
                 }
 
                 {
-                    Result result = AfterDeleteeAction(entity);
+                    Result<T> result = AfterDeleteeAction(entity);
                     if (!result.Success)
                     {
                         returnResult.Success = false;
@@ -177,27 +204,39 @@ namespace BL
             }
             catch (Exception ex)
             {
-                return new Result(false, ex.Message);
+                return new Result<T>(false, ex.Message);
             }
 
         }
+
+        public Result<T> Delete(int? id)
+        {
+            if (id == null)
+                return new Result<T>(false, "Не задан объект для удаления");
+            var result = LoadEntity(id);
+            if (!result.Success)
+                return new Result<T>(false, "Не удалось получить объект перед удалением");
+            return Delete(result.ResultEntity);
+        }
+
+        protected abstract ICommandContext PreparerDelete(T entity);
 
         /// <summary>
         /// Действия перед Удалением
         /// </summary>
         /// <returns></returns>
-        protected virtual Result BeforeDeleteAction(T entity)
+        protected virtual Result<T> BeforeDeleteAction(T entity)
         {
-            return new Result();
+            return new Result<T>();
         }
 
         /// <summary>
         /// Действия после удаления
         /// </summary>
         /// <returns></returns>
-        protected virtual Result AfterDeleteeAction(T entity)
+        protected virtual Result<T> AfterDeleteeAction(T entity)
         {
-            return new Result();
+            return new Result<T>();
         }
 
         #endregion

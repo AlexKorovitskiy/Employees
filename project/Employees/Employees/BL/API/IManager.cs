@@ -1,14 +1,10 @@
-﻿using Employees.Dispatcher.API;
-using Employees.Models.API;
-using System;
+﻿using API.Model;
+using Model.API;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Employees.BL.API
 {
-    public interface IManager<T>
+    public interface IManager<T> where T:IEntity 
     {
         /// <summary>
         /// Возвращает все сущности из базы

@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace Employees.Controllers
 {
-    public class TestController : ApiController
-    {
-        // GET: Test
-        public ActionResult Index()
-        {
-            return View();
-        }
-    }
+    //public class TestController : ApiController
+    //{
+    //    // GET: Test
+    //    public ActionResult Index()
+    //    {
+    //        return View();
+    //    }
+    //}
 }

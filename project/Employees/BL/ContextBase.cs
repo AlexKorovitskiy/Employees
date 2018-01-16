@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class ContextBase
+    public class ContextBase<T> where T : IEntity
     {
-        Result result { get; set; }
+        Result<T> result { get; set; }
     }
 }

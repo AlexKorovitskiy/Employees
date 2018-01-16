@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    class ContextSingleEntity<T> : ContextBase where T : IEntity
+    class ContextSingleEntity<T> : ContextBase<T> where T : IEntity
     {
         T Entity { get; set; }
         //ContextSingleEntity<T>()

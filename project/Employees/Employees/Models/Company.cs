@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-using Employees.Models.API;
 using Employees.Dispatcher;
+using API.Model;
+using API;
 
 namespace Employees.Models
 {
-    public class Company: IEntity
+    public class Company: ICompany
     {
-        #region Fields
+        #region Properies
         public int? Id { get; set; } = null;
 
         [Display (Name = "Имя")]
@@ -21,6 +22,9 @@ namespace Employees.Models
 
         [Display(Name = "Форма собственности")]
         public string OrganizationForm { get; set; }
+
+        public string SaveProcedureName { get {return  "SaveCompany"; } }
+        public string DeleteProcedureName { get { return "DeleteCompany"; } }
 
         #endregion
 
@@ -121,6 +125,13 @@ namespace Employees.Models
         }
 
         #endregion
-
+        public ICommandContext PreparerSave(Dictionary <string,object> param)
+        {
+            throw new Exception();
+        }
+        public ICommandContext PreparerDelete()
+        {
+            throw new Exception();
+        }
     }
 }

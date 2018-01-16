@@ -13,7 +13,7 @@ namespace BL
         public bool Success { get; set; }
         public string Message { get; set; }
         public T ResultEntity { get; set; }
-        public List<T> Entitys { get; set; }
+        public List<T> Entitys { get; set; } = new List<T>();
 
         public Result()
         {

@@ -63,3 +63,11 @@ D:\Alex\Employees\project\Employees\Employees\obj\Debug\Employees.pdb
 d:\2\Employees\project\Employees\Employees\obj\Debug\Employees.csprojResolveAssemblyReference.cache
 d:\2\Employees\project\Employees\Employees\obj\Debug\Employees.dll
 d:\2\Employees\project\Employees\Employees\obj\Debug\Employees.pdb
+D:\Alex\Employees\project\Employees\Employees\bin\API.dll
+D:\Alex\Employees\project\Employees\Employees\bin\BL.dll
+D:\Alex\Employees\project\Employees\Employees\bin\Model.dll
+D:\Alex\Employees\project\Employees\Employees\bin\Server.dll
+D:\Alex\Employees\project\Employees\Employees\bin\API.pdb
+D:\Alex\Employees\project\Employees\Employees\bin\BL.pdb
+D:\Alex\Employees\project\Employees\Employees\bin\Model.pdb
+D:\Alex\Employees\project\Employees\Employees\bin\Server.pdb

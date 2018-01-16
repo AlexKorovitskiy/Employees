@@ -14,9 +14,11 @@ namespace BL
     public abstract class AbstractManagerExecute<T> where T : IEntity//, new()
     {
         protected abstract string LoadProcedureName{ get; }
-        #region SaveAction
-
+        protected abstract string DeleteProcedureName { get; }
         protected virtual IServerModule RelatedServer { get; set; } = DispatcherSQL.GetDispatcher();
+
+
+        #region SaveAction
 
         /// <summary>
         /// Сохранение сущности
@@ -44,7 +46,7 @@ namespace BL
                 }
 
                 {
-                    var context = PreparerSave(/*param*/);
+                    var context = PreparerSave(entity/*param*/);
                     ServerResult result = RelatedServer.ExcecuteComand(context);
                     if (!result.Success)
                     {
@@ -72,7 +74,7 @@ namespace BL
             }
         }
 
-        protected abstract ICommandContext PreparerSave();
+        protected abstract ICommandContext PreparerSave(T entity);
 
         /// <summary>
         /// Действия перед сохранением
@@ -163,82 +165,32 @@ namespace BL
         /// <returns></returns>
         public Result<T> Delete(T entity)
         {
-            try
-            {
-                Result<T> returnResult = new Result<T>();
-
-                if (entity == null)
-                    return new Result<T>(false, "Не задан объект для удаления!");
-                {
-                    Result<T> result = BeforeDeleteAction(entity);
-                    if (!result.Success)
-                    {
-                        returnResult.Success = false;
-                        returnResult.Message = result.Message;
-                        return returnResult;
-                    }
-                }
-
-                {
-                    ICommandContext context = PreparerDelete(entity);
-                    ServerResult result = RelatedServer.ExcecuteComand(context);
-                    if (!result.Success)
-                    {
-                        returnResult.Success = false;
-                        returnResult.Message = result.Message;
-                        return returnResult;
-                    }
-
-                }
-
-                {
-                    Result<T> result = AfterDeleteeAction(entity);
-                    if (!result.Success)
-                    {
-                        returnResult.Success = false;
-                        returnResult.Message = result.Message;
-                        return returnResult;
-                    }
-                }
-                return returnResult;
-            }
-            catch (Exception ex)
-            {
-                return new Result<T>(false, ex.Message);
-            }
-
+            if (entity == null)
+                return new Result<T>(false, "Не задан объект для удаления");
+            return Delete(entity.Id);
         }
 
         public Result<T> Delete(int? id)
         {
-            if (id == null)
-                return new Result<T>(false, "Не задан объект для удаления");
-            var result = LoadEntity(id);
-            if (!result.Success)
-                return new Result<T>(false, "Не удалось получить объект перед удалением");
-            return Delete(result.ResultEntity);
-        }
+            if (id == null || id < 0)
+                return new Result<T>(false, "Не задан Id");
 
-        protected abstract ICommandContext PreparerDelete(T entity);
+            ICommandContext context;
+            {
+                context = new CommandContext();
+                context.ProcedureName = DeleteProcedureName;
+                context.Params.Add("Id", id);
+            }
 
-        /// <summary>
-        /// Действия перед Удалением
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Result<T> BeforeDeleteAction(T entity)
-        {
+            ServerResult deleteResult;
+            {
+                deleteResult = RelatedServer.ExcecuteComand(context);
+                if (!deleteResult.Success)
+                    return new Result<T>(false, deleteResult.Message);
+            }
             return new Result<T>();
         }
-
-        /// <summary>
-        /// Действия после удаления
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Result<T> AfterDeleteeAction(T entity)
-        {
-            return new Result<T>();
-        }
-
+        
         #endregion
     }
 }

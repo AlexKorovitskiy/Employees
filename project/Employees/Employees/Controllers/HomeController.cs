@@ -7,6 +7,8 @@ using Employees.BL;
 using API;
 using BL;
 using API.Model;
+using Employees.BL.Filter;
+using Employees.Models;
 
 namespace Employees.Controllers
 {
@@ -25,12 +27,12 @@ namespace Employees.Controllers
         public ActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View("~/Views/Authorization/Index.cshtml");
+            return View("~/Views/Home/Index.cshtml");
         }
         #region Company
 
         [HttpPost]
-        public ActionResult EditCompany(ICompany company)
+        public ActionResult EditCompany(Company company)
         {
             CompanyManager.GetManager().Save(company);
             return RedirectToAction("ShowCompanys");
@@ -75,7 +77,9 @@ namespace Employees.Controllers
                     return HttpNotFound();
                 Session["Company"] = filter.Company = result.ResultEntity;
             }
-            Result<IEmployee> resultLoadList = EmployeesManager.GetManager().LoadEntityList(filter);
+            else
+                Session["Company"] = null;
+            Result<Employee> resultLoadList = EmployeesManager.GetManager().LoadEntityList(filter);
             if (!resultLoadList.Success)
                 return HttpNotFound();
             ;
@@ -96,12 +100,12 @@ namespace Employees.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateEmployee(IEmployee employee)
+        public ActionResult CreateEmployee(Employee employee)
         {
             EmployeesManager.GetManager().Save(employee);
             //сессии использую для того, чтобы запоминать какая въюха была до перехода на форму редактирования
             //(если мы перешли в редактирование пользователя из вьюхи со списком работников конкретной компании, то вернемся потом на эту же вьюху)
-            ICompany company = (ICompany)Session["Company"];
+            Company company = (Company)Session["Company"];
             return RedirectToAction("ShowEmployees", new { idCompany = (company != null) ? company.Id : null });
         }
 
@@ -127,12 +131,12 @@ namespace Employees.Controllers
         /// <param name="employee"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditEmployee(IEmployee employee)
+        public ActionResult EditEmployee(Employee employee)
         {
             EmployeesManager.GetManager().Save(employee);
             //сессии использую для того, чтобы запоминать какая въюха была до перехода на форму редактирования
             //(если мы перешли в редактирование пользователя из вьюхи со списком работников конкретной компании, то вернемся потом на эту же вьюху)
-            ICompany company = (ICompany)Session["Company"];
+            Company company = (Company)Session["Company"];
             return RedirectToAction("ShowEmployees", new { idCompany = (company != null) ? company.Id : null });
         }
 
@@ -150,7 +154,7 @@ namespace Employees.Controllers
             EmployeesManager.GetManager().Delete(result.ResultEntity);
             //сессии использую для того, чтобы запоминать какая въюха была до перехода на форму редактирования
             //(если мы перешли в редактирование пользователя из вьюхи со списком работников конкретной компании, то вернемся потом на эту же вьюху)
-            ICompany company = (ICompany)Session["Company"];
+            Company company = (Company)Session["Company"];
             return RedirectToAction("ShowEmployees", new { idCompany = (company != null) ? company.Id : null });
         }
 

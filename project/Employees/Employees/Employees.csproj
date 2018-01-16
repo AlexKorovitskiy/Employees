@@ -151,26 +151,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="BL\API\IManager.cs" />
-    <Compile Include="BL\CompanyManager.cs" />
-    <Compile Include="BL\EmployeesManager.cs" />
-    <Compile Include="BL\ManagerExecute.cs" />
-    <Compile Include="BL\UserManager.cs" />
+    <Compile Include="BL\Manager\CompanyManager.cs" />
+    <Compile Include="BL\Manager\EmployeesManager.cs" />
+    <Compile Include="BL\Filter\EmployeesFilter.cs" />
+    <Compile Include="BL\Manager\UserManager.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Dispatcher\ContextResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Dispatcher\API\IExecuteContext.cs" />
-    <Compile Include="Dispatcher\API\IResult.cs" />
-    <Compile Include="Dispatcher\Context.cs" />
-    <Compile Include="Dispatcher\Dispatcher.cs" />
-    <Compile Include="Dispatcher\Result.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\API\ICompany.cs" />
-    <Compile Include="Models\API\IEmployee.cs" />
-    <Compile Include="Models\EmployeesFilter.cs" />
     <Compile Include="Models\Identyity\ApplicationUser.cs" />
     <Compile Include="Models\Autorisation\Login.cs" />
     <Compile Include="Models\Company.cs" />
@@ -208,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\API\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +213,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{098A335E-08D2-4DEC-A7FA-8AC3D146FF97}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.csproj">
+      <Project>{6879EBFB-3822-49FD-9EC7-5603F8AD5153}</Project>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
